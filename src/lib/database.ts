@@ -2,6 +2,7 @@ import { supabase } from './supabase';
 import { PlatformMetric, ReviewPipelineItem, BrandPartnership, ActivityLog } from '../types';
 
 export const fetchMetrics = async (): Promise<PlatformMetric[]> => {
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from('platform_metrics')
     .select('*');
@@ -11,6 +12,7 @@ export const fetchMetrics = async (): Promise<PlatformMetric[]> => {
 };
 
 export const updateMetric = async (metricType: string, value: number): Promise<void> => {
+  if (!supabase) return;
   const { error } = await supabase
     .from('platform_metrics')
     .update({ current_value: value, updated_at: new Date().toISOString() })
@@ -20,6 +22,7 @@ export const updateMetric = async (metricType: string, value: number): Promise<v
 };
 
 export const fetchReviewPipeline = async (): Promise<ReviewPipelineItem[]> => {
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from('review_pipeline')
     .select('*')
@@ -30,6 +33,7 @@ export const fetchReviewPipeline = async (): Promise<ReviewPipelineItem[]> => {
 };
 
 export const updateReviewItem = async (id: string, updates: Partial<ReviewPipelineItem>): Promise<void> => {
+  if (!supabase) return;
   const { error } = await supabase
     .from('review_pipeline')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -39,6 +43,7 @@ export const updateReviewItem = async (id: string, updates: Partial<ReviewPipeli
 };
 
 export const fetchBrandPartnerships = async (): Promise<BrandPartnership[]> => {
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from('brand_partnerships')
     .select('*')
@@ -49,6 +54,7 @@ export const fetchBrandPartnerships = async (): Promise<BrandPartnership[]> => {
 };
 
 export const addActivityLog = async (message: string): Promise<void> => {
+  if (!supabase) return;
   const { error } = await supabase
     .from('activity_logs')
     .insert({ message });
@@ -57,6 +63,7 @@ export const addActivityLog = async (message: string): Promise<void> => {
 };
 
 export const fetchActivityLogs = async (limit: number = 50): Promise<ActivityLog[]> => {
+  if (!supabase) return [];
   const { data, error } = await supabase
     .from('activity_logs')
     .select('*')
@@ -68,6 +75,7 @@ export const fetchActivityLogs = async (limit: number = 50): Promise<ActivityLog
 };
 
 export const updateBrandPartnership = async (id: string, updates: Partial<BrandPartnership>): Promise<void> => {
+  if (!supabase) return;
   const { error } = await supabase
     .from('brand_partnerships')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -77,6 +85,7 @@ export const updateBrandPartnership = async (id: string, updates: Partial<BrandP
 };
 
 export const addAudienceMessage = async (message: string): Promise<void> => {
+  if (!supabase) return;
   const { error } = await supabase
     .from('audience_messages')
     .insert({ message });
